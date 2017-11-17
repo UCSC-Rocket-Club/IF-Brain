@@ -66,5 +66,8 @@ void segment8(double ax_lin, double ay_lin, double az_lin, double ax_ang, double
      posit_ang[1] = derivation(posit_ang[1], veloc_ang[1], dt);
      posit_ang[2] = derivation(posit_ang[2], veloc_ang[2], dt);
 
+     //this can be shortened if the derivation function takes in 1x3array
+     //arguments and spits out one as well.
+
 
 }
