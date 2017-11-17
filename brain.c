@@ -26,6 +26,8 @@ float * kalmanFilter(float data[]);
 float * derivation(float valueSum[], float valueNew[], float dt);
 void writeData(/* all the data */);
 void ADASControl(/* control values */);
+float bestFitFcn(float time);
+
 
 /*  Segment 1 */
 /* Start Sequence */
@@ -117,6 +119,7 @@ bool cleanUp(){
 /* Derivation Function */
 float * derivation(float valueSum[], float valueNew[], dt){
 
+	return derived;
 }
 
 
@@ -127,15 +130,37 @@ void writeData(/* so much data */){
 void ADASControl(/* control values */){
 	/* Segment 12 */
 	if(/* out of burn phase*/){
-	
-	/* Segment 13 */
+		
+		/* Segment 13 */
+		/* Model(t) */
+		float prediction = bestFitFcn(t);
+
+		/* Segment 14 */
+		/* calculate deltas */
+		// find out how data is represented, then subtract
+
+		/* Segment 15 */
+		/* fraction of f deployed */
+		changeInA = ((densityAir(z)*(v(t)^2))/2M) * changeInB(f)
+		f = //...
+
+		/* Segement 16 */
+		/* Deploy ADAS */
+		// see how open ADAS is
+		float fractionOfOpen = ADASRead();
+		// retract ADAS fins
+		ADASDeploy(-fractionOfOpen)
+
 
 
 	}
 }
 
+/* Modeling team will provide, but we need to implement */
+float bestFitFcn(float time){
 
-
+	return prediction;
+}
 
 
 
