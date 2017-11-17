@@ -19,11 +19,13 @@ void startSequence();
 void feedbackLoop(int initalData[]); 
 bool cleanUp();
 float ADASRead();
-void ADASControl(float f);
+void ADASDeploy(float f);
 float * accRead();
 float * gyroRead();
 float * kalmanFilter(float data[]);
 float * derivation(float valueSum[], float valueNew[], float dt);
+void writeData(/* all the data */);
+void ADASControl(/* control values */);
 
 /*  Segment 1 */
 /* Start Sequence */
@@ -73,6 +75,21 @@ void feedbackLoop(initalData){
 		float vAngular[] += derivation(vAngular, accAngular, dt);
 		float angAngular[] += derivation(angAngular, vAngular, dt);  
 
+		/* Segment 10 */
+		/* Write Data */
+		writeData(/* however you choose to package it*/);
+
+		/* Segment 11 */
+		/* Control Variables */
+		|angle(t)|
+		acceleraton(t)
+		velocity(t)
+		altitude(t)
+
+		/* Segment 12 */
+		/* ADAS Control Handoff */
+		ADASControl(/* ADAS Control Values*/);
+
 	}
 
 	/* Segment 3 */
@@ -86,7 +103,7 @@ bool cleanUp(){
 	// see how open ADAS is
 	float fractionOfOpen = ADASRead();
 	// retract ADAS fins
-	ADASControl(-fractionOfOpen)
+	ADASDeploy(-fractionOfOpen)
 
 	float success = ADASRead();
 	if(success == 0.0){
@@ -103,9 +120,19 @@ float * derivation(float valueSum[], float valueNew[], dt){
 }
 
 
+void writeData(/* so much data */){
+	// interact with SD card driver
+}
+
+void ADASControl(/* control values */){
+	/* Segment 12 */
+	if(/* out of burn phase*/){
+	
+	/* Segment 13 */
 
 
-
+	}
+}
 
 
 
