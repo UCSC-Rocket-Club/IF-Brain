@@ -4,11 +4,6 @@
 // Description: for segment 8
 ///////////////////////////////////////////////
 
-// float vLinear[] += derivation(vLinear, accLinear, dt);
-// float pLinear[] += derivation(pLinear, vLinear, dt);
-// float vAngular[] += derivation(vAngular, accAngular, dt);
-// float angAngular[] += derivation(angAngular, vAngular, dt);
-
 //ask what kind of arguments these are.
 //how to calculate linear velocity?
      //think we are given accLinear and dt
@@ -44,6 +39,7 @@ double derivation(double valueSum, double valueNew, double dt){
      return 0;
 }
 
+//this is what will be used for brain.c
 void segment8(double ax_lin, double ay_lin, double az_lin, double ax_ang, double ay_ang, double az_ang, double dt){
      //this function takes in dt, linear and angular acceleration.
      //will output 6 nice 1x3 arrays to be read later
