@@ -1,0 +1,10 @@
+What I did:
+1) I went to https://sourceforge.net/projects/mingw/files/ and towards the top, downloaded the latest version.
+2) Run the installer and when you see the window with a bunch of options to check, I only checked the mingw32-base.
+3) In that window on the top left, click on the installation tab and click 'apply changes'.
+4) Go to start and search 'environment' and open 'edit the system environment variables'
+5) Click on 'environment variables' towards the bottom.
+6) Click on 'path' under system variables, then click 'edit' then click 'new'.
+7) Put in the directory where you installed. something like "..\MinGW\bin"
+8) In git, write the command $ mingw-get install gcc
+Think thats what I did exactly. I'm on windows 10.
