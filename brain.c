@@ -6,9 +6,9 @@ libraries and other c software we create
 #include ...
 #include ...
 
-*/ 
+*/
 
-/* 
+/*
 macro definitions
 #define
 
@@ -16,7 +16,7 @@ macro definitions
 
 /* function definitions */
 void startSequence();
-void feedbackLoop(int initalData[]); 
+void feedbackLoop(int initalData[]);
 bool cleanUp();
 float ADASRead();
 void ADASDeploy(float f);
@@ -40,11 +40,11 @@ void startSequence(){
 }
 
 /* Segment 2 */
-/* Feedback loop start */ 
+/* Feedback loop start */
 
 void feedbackLoop(initalData){
 	/* global variables */
-	// kalman filter state variables 
+	// kalman filter state variables
 	// gyroData
 	// accData
 	// sums of accData
@@ -54,7 +54,7 @@ void feedbackLoop(initalData){
 	while(feedbackConditon){
 		/* Segment 5 */
 		/* Sensor interface */
-		
+
 		// set data from accRead() into readable data
 		// set data from gyroRead() into readable data
 
@@ -75,7 +75,7 @@ void feedbackLoop(initalData){
 		float pLinear[] += derivation(pLinear, vLinear, dt);
 
 		float vAngular[] += derivation(vAngular, accAngular, dt);
-		float angAngular[] += derivation(angAngular, vAngular, dt);  
+		float angAngular[] += derivation(angAngular, vAngular, dt);
 
 		/* Segment 10 */
 		/* Write Data */
@@ -118,7 +118,8 @@ bool cleanUp(){
 /* Segment 9 */
 /* Derivation Function */
 float * derivation(float valueSum[], float valueNew[], dt){
-
+	float derived = 0 ;
+	derived+= (dt/2)(valueSum[] + valueNew[]);
 	return derived;
 }
 
@@ -130,7 +131,7 @@ void writeData(/* so much data */){
 void ADASControl(/* control values */){
 	/* Segment 12 */
 	if(/* out of burn phase*/){
-		
+
 		/* Segment 13 */
 		/* Model(t) */
 		float prediction = bestFitFcn(t);
