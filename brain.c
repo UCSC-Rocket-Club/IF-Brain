@@ -27,6 +27,8 @@ float * derivation(float valueSum[], float valueNew[], float dt);
 void writeData(/* all the data */);
 void ADASControl(/* control values */);
 float bestFitFcn(float time);
+/* Segment 14 */
+double * delta(double * ActualValues, double * ModelValues);
 
 
 /*  Segment 1 */
@@ -137,12 +139,17 @@ void ADASControl(/* control values */){
 
 		/* Segment 14 */
 		/* calculate deltas */
-		// find out how data is represented, then subtract
+		double * deltas = delta(actualValues, modelValues);
+
 
 		/* Segment 15 */
 		/* fraction of f deployed */
 		changeInA = ((densityAir(z)*(v(t)^2))/2M) * changeInB(f)
 		f = //...
+
+		// Free ptr to deltas array
+		free(deltas);
+		deltas = NULL;
 
 		/* Segement 16 */
 		/* Deploy ADAS */
@@ -162,6 +169,17 @@ float bestFitFcn(float time){
 	return prediction;
 }
 
+
+/* delta, calculates change in acc, vel, altitude */
+double * delta(double * actualValues, double * modelValues){
+	double * change = calloc(3, sizeof(double));
+
+	change[0] = actualValues[0] - modelValues[0];
+	change[1] = actualValues[1] - modelValues[1];
+	change[2] = actualValues[2] - modelValues[2];
+
+	return change;
+}
 
 
 
