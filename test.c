@@ -8,21 +8,7 @@
 
 
 //ask what kind of arguments these are.
-//how to calculate linear velocity?
-     //think we are given accLinear and dt
-     //from there, we get integral
-     //that is segment 9 job
-//for segment 8.
-
-//input to segment 8:
-//taking values
-//from these 9 values, do 12 caluclations
-//acceloration is given from accelorametor with x y z in linear and angular. also dt given
-//from that, will get velocity x y z
-//then position x y z
-//have to do with linear and angular so 6 + 6 is 12 derivations
-//output linear acceleartion and angular acceleration in a clean way
-//think I will output 1x3 array[x,y,z]
+//how to cal output 1x3 array[x,y,z]
 //use double.
 
 #include<stdio.h>
@@ -35,7 +21,21 @@ void segment8(double ax_lin, double ay_lin, double az_lin, double ax_ang, double
 
 int main(){
      segment8(1,2,3,1,2,3,5);
-}
+//calculate linear velocity?
+     //think we are given accLinear and dt
+     //from there, we get integral
+     //that is segment 9 job
+//for segment 8.
+
+//input to segment 8:
+//taking values
+//from these 9 values, do 12 calculations
+//accelerometer is given from accelerometer with x y z in linear and angular. also dt given
+//from that, will get velocity x y z
+//then position x y z
+//have to do with linear and angular so 6 + 6 is 12 derivations
+//output linear acceleration and angular acceleration in a clean way
+//think I will
 
 
 double derivation(double valueSum, double valueNew, double dt){
