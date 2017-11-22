@@ -1,76 +1,72 @@
 //////////////////////////////////////////////
-// Names: Johnson | Pattawut 
+// Names: Johnson | Pattawut
 // Date: 11/16/2017
 // Description: for segment 8
 ///////////////////////////////////////////////
 
-//hi bill
-
-
-//ask what kind of arguments these are.
-//how to cal output 1x3 array[x,y,z]
-//use double.
-
 #include<stdio.h>
 #include<stdlib.h>
 
-double accel_lin[3], accel_ang[3], veloc_lin[3], veloc_ang[3], posit_lin[3], posit_ang[3];
-
-double derivation(double valueSum, double valueNew, double dt);
-void segment8(double ax_lin, double ay_lin, double az_lin, double ax_ang, double ay_ang, double az_ang, double dt);
+void test1();
+double derivation(double *valueSum, double *valueNew, double dt);
+//working with 2x3 arrays
 
 int main(){
-     segment8(1,2,3,1,2,3,5);
-//calculate linear velocity?
-     //think we are given accLinear and dt
-     //from there, we get integral
-     //that is segment 9 job
-//for segment 8.
-
-//input to segment 8:
-//taking values
-//from these 9 values, do 12 calculations
-//accelerometer is given from accelerometer with x y z in linear and angular. also dt given
-//from that, will get velocity x y z
-//then position x y z
-//have to do with linear and angular so 6 + 6 is 12 derivations
-//output linear acceleration and angular acceleration in a clean way
-//think I will
-
-
-double derivation(double valueSum, double valueNew, double dt){
+     // printf("hello world \n");
+     test1();
      return 0;
 }
 
-//this is what will be used for brain.c
-void segment8(double ax_lin, double ay_lin, double az_lin, double ax_ang, double ay_ang, double az_ang, double dt){
-     //this function takes in dt, linear and angular acceleration.
-     //will output 6 nice 1x3 arrays to be read later
-     //this will go in a while loop each time there is an interrupt basically
-     //each interrupt will have a new dt blah blah
-     accel_lin[0] = ax_lin;
-     accel_lin[1] = ay_lin;
-     accel_lin[2] = az_lin;
-     accel_ang[0] = ax_ang;
-     accel_ang[1] = ay_ang;
-     accel_ang[2] = az_ang;
+double derivation(double *valueSum, double *valueNew, double dt){
+     return 0;
+}
 
-     veloc_lin[0] = derivation(veloc_lin[0], accel_lin[0], dt);
-     veloc_lin[1] = derivation(veloc_lin[1], accel_lin[1], dt);
-     veloc_lin[2] = derivation(veloc_lin[2], accel_lin[2], dt);
-     veloc_ang[0] = derivation(veloc_ang[0], accel_ang[0], dt);
-     veloc_ang[1] = derivation(veloc_ang[1], accel_ang[1], dt);
-     veloc_ang[2] = derivation(veloc_ang[2], accel_ang[2], dt);
+void test1(){
+     int col = 3;
+     int row = 2;
+     int count = 0;
+     int **array;
+     array = (int **)malloc(sizeof(int *) * row);
+     array[0] = (int *)malloc(sizeof(int)* col * row);
+     for(int i=0 ; i<row ; i++){
+          array[i] = (*array + col * i);
+     }
+     for(int i=0 ; i<row ; i++){
+          for(int j=0 ; j<col ; j++){
+               // array[i][j] = count++;
+               *(*(array+i)+j) = count++;
+               printf("%d ", array[i][j]);
+          }
+     }
+     // for(int i=0 ; i<row ; i++){
+     //      for(int j=0 ; j<col ; j++){
+     //           printf("%d ", array[i][j]);
+     //      }
+     // }
 
-     posit_lin[0] = derivation(posit_lin[0], veloc_lin[0], dt);
-     posit_lin[1] = derivation(posit_lin[1], veloc_lin[1], dt);
-     posit_lin[2] = derivation(posit_lin[2], veloc_lin[2], dt);
-     posit_ang[0] = derivation(posit_ang[0], veloc_ang[0], dt);
-     posit_ang[1] = derivation(posit_ang[1], veloc_ang[1], dt);
-     posit_ang[2] = derivation(posit_ang[2], veloc_ang[2], dt);
+     printf("\nAddress of array+0: %d\n", array); //think this points to array[0][0]
+     printf("Address of array+1: %d\n\n", array+1); //think this points to array[1][0]
 
-     //this can be shortened if the derivation function takes in 1x3array
-     //arguments and spits out one as well.
+     printf("Content at [0][0] : %d\n", array[0][0]);
+     printf("Address at [0][0] : %d\n", &array[0][0]);
+     printf("Content at [0][1] : %d\n", array[0][1]);
+     printf("Address at [0][1] : %d\n", &array[0][1]);
+     printf("Content at [0][2] : %d\n", array[0][2]);
+     printf("Address at [0][2] : %d\n", &array[0][2]);
+     printf("Content at [0][3] : %d\n", array[0][3]);
+     printf("Address at [0][3] : %d\n\n", &array[0][3]);
 
+     printf("Content at [1][0] : %d\n", array[1][0]);
+     printf("Address at [1][0] : %d\n", &array[1][0]);
+     printf("Content at [1][1] : %d\n", array[1][1]);
+     printf("Address at [1][1] : %d\n", &array[1][1]);
+     printf("Content at [1][2] : %d\n", array[1][2]);
+     printf("Address at [1][2] : %d\n\n", &array[1][2]);
 
+     printf("Address at  [0]   : %d\n", array[0]);
+     printf("Content at *[0]   : %d\n", *array[0]);
+     printf("Address at  [1]   : %d\n", array[1]);
+     printf("Content at *[1]   : %d\n", *array[1]);
+     //free memory
+     exit(1);
 }
