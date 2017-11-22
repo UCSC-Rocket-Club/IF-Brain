@@ -18,6 +18,12 @@ double derivation(double *valueSum, double *valueNew, double dt);
 int main(){
      // printf("hello world \n");
      test1();
+
+     //ask Daniel whether he will be storing his data into my 2x3 array or just
+     //hand me a 1x3 array and I'll store it in 2x3 array
+     //basically swap the rows and then throw into derivation
+     //simple.
+
      return 0;
 }
 
