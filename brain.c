@@ -35,6 +35,8 @@ float bestFitFcn(float time);
 /* Segment 14 */
 double * delta(double * ActualValues, double * ModelValues);
 
+int maxAngle(double * angleData);
+
 
 /*  Segment 1 */
 /* Start Sequence */
@@ -56,6 +58,10 @@ void feedbackLoop(initalData){
 	// accData
 	// sums of accData
 	// sums of gyroData
+	double angle_t = 0;
+	double acceleraton_t = 0;
+	double velocity_t = 0;
+	double altitude_t = 0;
 	// time var
 
 	while(feedbackConditon){
@@ -90,7 +96,7 @@ void feedbackLoop(initalData){
 
 		/* Segment 11 */
 		/* Control Variables */
-		|angle(t)|
+		double angle_t = angleData[maxAngle(angleData)];
 		acceleraton(t)
 		velocity(t)
 		altitude(t)
@@ -186,7 +192,20 @@ double * delta(double * actualValues, double * modelValues){
 	return change;
 }
 
+/* Find the max angle and return its index */
+int maxAngle(double * angleData){
+	int index = 0;
+	double max = angleData[0];
+	// u,v,w values, only need two iterations
+	for(int i = 1; i < 3; i++){
+		if(angleData[i] > max){
+			index = 1;
+			max = angleData[i];
+		}
+	}
 
+	return index;
+}
 
 
 int main(){
