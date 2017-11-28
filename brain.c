@@ -16,6 +16,11 @@ macro definitions
 #include <stdio.h>
 #include <stdlib.h>
 
+// corelibs-arduino101/system/libarc32_arduino101/framework/include/time.h
+#include <time.h>
+
+// inttype library for time variables. Provides uint32_t type
+#include <stdint.h>
 
 
 
@@ -39,6 +44,8 @@ double * delta(double * ActualValues, double * ModelValues);
 /*  Segment 1 */
 /* Start Sequence */
 void startSequence(){
+	
+	
 	while(condition){
 		// record last ~2 seconds data
 	}
@@ -56,7 +63,11 @@ void feedbackLoop(initalData){
 	// accData
 	// sums of accData
 	// sums of gyroData
-	// time var
+	/* 
+	  time variables are in milliseconds
+	*/
+	uint32_t t0 = 0; uint32_t t1 = 0; 
+	uint32_t dt = 0;
 
 	while(feedbackConditon){
 		/* Segment 5 */
@@ -74,7 +85,11 @@ void feedbackLoop(initalData){
 
 		/* Segment 7 */
 		/* Calculate dt */
-		// talk with electrical to find best way to do this
+		// Untested. Sending merge request, but needs to be tested on an arduino 101
+		t1 = get_uptime_ms();
+		dt = t1 - t0;
+		t0 = t1;
+
 
 		/* Segment 8 */
 		/* 3.D. Calculations */
