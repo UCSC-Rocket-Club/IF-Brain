@@ -16,7 +16,8 @@ macro definitions
 #include <stdio.h>
 #include <stdlib.h>
 
-
+/* Segment 10 include */
+#include <utility/SD.h>
 
 
 /* function definitions */
@@ -29,7 +30,7 @@ float * accRead();
 float * gyroRead();
 float * kalmanFilter(float data[]);
 float * derivation(float valueSum[], float valueNew[], float dt);
-void writeData(/* all the data */);
+void writeData(File launchDataFile, DATA);
 void ADASControl(/* control values */);
 float bestFitFcn(float time);
 /* Segment 14 */
@@ -57,6 +58,22 @@ void feedbackLoop(initalData){
 	// sums of accData
 	// sums of gyroData
 	// time var
+
+
+	/* ---------------------------------
+	/ Segment 10 SD card setup
+	------------------------------------*/
+	// Initalize file wrapper included in SD.h
+	File launchDataFile;
+
+	// Initialize sd card on csPin 4. Need to change if using different csPin. see SD.cpp
+	if (!SD.begin(4)) {
+	    exit(1);
+	}
+
+	launchDataFile = SD.open("launchData.txt", FILE_WRITE);
+
+
 
 	while(feedbackConditon){
 		/* Segment 5 */
@@ -86,7 +103,9 @@ void feedbackLoop(initalData){
 
 		/* Segment 10 */
 		/* Write Data */
-		writeData(/* however you choose to package it*/);
+		if(launchDataFile){
+			writeData(launchDataFile, DATA);
+		}
 
 		/* Segment 11 */
 		/* Control Variables */
@@ -100,6 +119,9 @@ void feedbackLoop(initalData){
 		ADASControl(/* ADAS Control Values*/);
 
 	}
+
+	// Close File wrapper handle
+	launchDataFile.close();
 
 	/* Segment 3 */
 	/* Commence of Cleanup */
@@ -130,8 +152,18 @@ float * derivation(float valueSum[], float valueNew[], dt){
 }
 
 
-void writeData(/* so much data */){
-	// interact with SD card driver
+/* Segment 10 function */
+void writeData(File handle, DATA){\
+	size_t num_bytes;
+	uint8_t *buf_ptr;
+
+	// malloc buf_ptr
+	// change what it points at
+
+	// example call to file write
+	handle.write(const buf_ptr, num_bytes);
+
+	return;
 }
 
 void ADASControl(/* control values */){
@@ -190,5 +222,7 @@ double * delta(double * actualValues, double * modelValues){
 
 
 int main(){
+
+
 	startSequence();
 }
