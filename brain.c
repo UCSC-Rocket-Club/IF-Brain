@@ -13,6 +13,11 @@ macro definitions
 #define
 
 */
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
 
 /* function definitions */
 void startSequence();
