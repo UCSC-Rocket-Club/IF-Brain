@@ -119,22 +119,24 @@ bool cleanUp(){
 double * integrate(double **ds,double dt){
 // Catherine Lee
 // Segment 9
-// integrate() integrates a vector using Trapezoidal Riemann Sums
-//note: only returns new calculated area under the curve but previous area gets added on outside of method 
+// integrate() integrates a vector using Trapezoidal Riemann Sums to obtain a 1x3 array (x,y,z)
 // dt is change in time
-	double *baseSum;
-	  for(int i = 0 ; i < 3; i++)
-	  {
-	    baseSum[i] = dt*(ds[0][i]+ds[1][i])/2;
+double *baseSum = malloc(3*sizeof(double));
+  for(int i = 0 ; i < 3; i++)
+  {
+    baseSum[i] = dt*(ds[0][i]+ds[1][i])/2;
 
 
+    //ds[0] = old acceleration
+    //ds[1] = new acceleration
+		//ds[2] is the old velocity that isn't touched
 
-	  }
-	  //return [x, y, z] aka velocity
-	  //x is the derived in x direction
-	  //y is derived in y direction
-	  //z is derived in z diection
-	  return baseSum;
+  }
+  //return [x, y, z]
+  //x is the derived in x direction
+  //y is derived in y direction
+  //z is derived in z diection
+  return baseSum;
 
 }
 
