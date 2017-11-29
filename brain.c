@@ -6,9 +6,9 @@ libraries and other c software we create
 #include ...
 #include ...
 
-*/ 
+*/
 
-/* 
+/*
 macro definitions
 #define
 
@@ -16,17 +16,21 @@ macro definitions
 
 /* function definitions */
 void startSequence();
-void feedbackLoop(int initalData[]); 
+void feedbackLoop(int initalData[]);
 bool cleanUp();
 float ADASRead();
 void ADASDeploy(float f);
 float * accRead();
 float * gyroRead();
 float * kalmanFilter(float data[]);
-float * derivation(float valueSum[], float valueNew[], float dt);
+
 void writeData(/* all the data */);
 void ADASControl(/* control values */);
 float bestFitFcn(float time);
+
+double **make2d(int col, int row);
+double** swapOldNew(double **ptr);
+double* integrate(double **ds, double dt);
 
 
 /*  Segment 1 */
@@ -40,11 +44,11 @@ void startSequence(){
 }
 
 /* Segment 2 */
-/* Feedback loop start */ 
+/* Feedback loop start */
 
 void feedbackLoop(initalData){
 	/* global variables */
-	// kalman filter state variables 
+	// kalman filter state variables
 	// gyroData
 	// accData
 	// sums of accData
@@ -54,7 +58,7 @@ void feedbackLoop(initalData){
 	while(feedbackConditon){
 		/* Segment 5 */
 		/* Sensor interface */
-		
+
 		// set data from accRead() into readable data
 		// set data from gyroRead() into readable data
 
@@ -69,13 +73,37 @@ void feedbackLoop(initalData){
 		/* Calculate dt */
 		// talk with electrical to find best way to do this
 
+		//**************************************
 		/* Segment 8 */
 		/* 3.D. Calculations */
-		float vLinear[] += derivation(vLinear, accLinear, dt);
-		float pLinear[] += derivation(pLinear, vLinear, dt);
 
-		float vAngular[] += derivation(vAngular, accAngular, dt);
-		float angAngular[] += derivation(angAngular, vAngular, dt);  
+		//get integral
+		//acc_lin[1] = inputed from above.
+		//acc_ang[1] = inputed from above.
+          vel_lin[1] = integrate(acc_lin, dt);
+		vel_ang[1] = integrate(acc_ang, dt);
+          pos_lin[1] = integrate(vel_lin, dt);
+		ang_ang[1] = integrate(vel_ang, dt);
+          //add onto the total
+          for(int j=0 ; j<3 ; j++){
+               acc_lin[2][j] = acc_lin[2][j] + acc_lin[1][j];
+               vel_lin[2][j] = vel_lin[2][j] + vel_lin[1][j];
+               pos_lin[2][j] = pos_lin[2][j] + pos_lin[1][j];
+
+			acc_ang[2][j] = acc_ang[2][j] + acc_ang[1][j];
+               vel_ang[2][j] = vel_ang[2][j] + vel_ang[1][j];
+               ang_ang[2][j] = ang_ang[2][j] + ang_ang[1][j];
+          }
+		//swap old and new values.
+          acc_lin = swapOldNew(acc_lin);
+          vel_lin = swapOldNew(vel_lin);
+          pos_lin = swapOldNew(pos_lin);
+
+		acc_ang = swapOldNew(acc_ang);
+          vel_ang = swapOldNew(vel_ang);
+          ang_ang = swapOldNew(ang_ang);
+
+		//**************************************
 
 		/* Segment 10 */
 		/* Write Data */
@@ -117,9 +145,12 @@ bool cleanUp(){
 
 /* Segment 9 */
 /* Derivation Function */
-float * derivation(float valueSum[], float valueNew[], dt){
-
-	return derived;
+double* integrate(double **ds, double dt){
+     double *baseSum = malloc(3 * sizeof(double));
+     for(int i=0 ; i<3 ; i++){
+          baseSum[i] = dt * (ds[0][i] + ds[1][i])/2;
+     }
+     return baseSum;
 }
 
 
@@ -130,7 +161,7 @@ void writeData(/* so much data */){
 void ADASControl(/* control values */){
 	/* Segment 12 */
 	if(/* out of burn phase*/){
-		
+
 		/* Segment 13 */
 		/* Model(t) */
 		float prediction = bestFitFcn(t);
@@ -162,8 +193,23 @@ float bestFitFcn(float time){
 	return prediction;
 }
 
-
-
+//this will create an 2d array in pointer land of [col][row]
+double** make2d(int col, int row){
+     double **array;
+     array = (double **)malloc(sizeof(double *) * row);
+     array[0] = (double *)malloc(sizeof(double)* col * row);
+     for(int i=0 ; i<row ; i++){
+          array[i] = (*array + col * i);
+     }
+     return array;
+}
+//this is for swapping old and new value
+double** swapOldNew(double **ptr){
+    double *temp = ptr[0];
+    ptr[0] = ptr[1];
+    ptr[1] = temp;
+    return ptr;
+}
 
 
 int main(){
