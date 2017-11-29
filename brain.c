@@ -23,8 +23,7 @@ void ADASDeploy(float f);
 float * accRead();
 float * gyroRead();
 float * kalmanFilter(float data[]);
-float * derivation(float valueSum[], float valueNew[], float dt);
-void writeData(/* all the data */);
+double * integrate(double **ds,double dt);
 void ADASControl(/* control values */);
 float bestFitFcn(float time);
 
@@ -116,26 +115,26 @@ bool cleanUp(){
 }
 
 /* Segment 9 */
-/* Derivation Function */
-double * derivation(double * valueSum, double * base,double dt){
+/* Integration Function */
+double * integrate(double **ds,double dt){
 // Catherine Lee
 // Segment 9
-// derivation() integrates an acceleration vector using Trapezoidal Riemann Sums to obtain velocity
-// valueSum is the velocity that's being updated
-// base is a 2 x 3 array of acceleration values; first row is new acceleration values in (x,y,z), 2nd row is old acceleration values in (x,y,z)
+// integrate() integrates a vector using Trapezoidal Riemann Sums
+//note: only returns new calculated area under the curve but previous area gets added on outside of method 
 // dt is change in time
-  for(int i = 0 ; i < 3; i++)
-  {
-    double baseSum = base[0][i]+base[1][i];
-  	valueSum[i]+= dt*(baseSum)/2;
-    printf("derived:%f\n",valueSum[i]);
+	double *baseSum;
+	  for(int i = 0 ; i < 3; i++)
+	  {
+	    baseSum[i] = dt*(ds[0][i]+ds[1][i])/2;
 
-  }
-  //return [x, y, z]
-  //x is the derived in x direction
-  //y is derived in y direction
-  //z is derived in z diection
-	return valueSum;
+
+
+	  }
+	  //return [x, y, z] aka velocity
+	  //x is the derived in x direction
+	  //y is derived in y direction
+	  //z is derived in z diection
+	  return baseSum;
 
 }
 
