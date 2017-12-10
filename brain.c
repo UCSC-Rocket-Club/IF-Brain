@@ -1,18 +1,5 @@
 /* brain.c */
 
-/*
-libraries and other c software we create
-
-#include ...
-#include ...
-
-*/ 
-
-/* 
-macro definitions
-#define
-
-*/
 #include <stdio.h>
 #include <stdlib.h>
 
